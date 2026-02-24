@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schmidt Logistics – Ihr Speditionspartner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:     #0d0d0d;
+      --paper:   #f5f0e8;
+      --accent:  #e8420a;
+      --mid:     #3a3a3a;
+      --muted:   #9a9080;
+      --line:    #d4cfc5;
+      --fedex-purple: #4d148c;
+      --post-yellow:  #ffcc00;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--ink); color: var(--paper) !important;
+      padding: 0.55rem 1.3rem;
+      border-radius: 2px;
+    }
+    .nav-cta:hover { background: var(--accent); color: var(--paper) !important; }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 4rem 6rem 4rem;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      opacity: 0; animation: fadeUp .6s .1s forwards;
+    }
+    .hero-h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 8vw, 8rem);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      opacity: 0; animation: fadeUp .7s .25s forwards;
+    }
+    .hero-h1 em { color: var(--accent); font-style: normal; }
+    .hero-sub {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--mid);
+      max-width: 38ch;
+      opacity: 0; animation: fadeUp .7s .4s forwards;
+    }
+    .hero-actions {
+      margin-top: 2.8rem; display: flex; gap: 1rem; align-items: center;
+      opacity: 0; animation: fadeUp .7s .55s forwards;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      padding: 0.9rem 2rem; border: none; cursor: pointer;
+      font-family: 'DM Mono', monospace; font-size: 0.8rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--ink); transform: translateY(-2px); }
+    .btn-secondary {
+      font-family: 'DM Mono', monospace; font-size: 0.8rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--mid); text-decoration: none;
+      border-bottom: 1px solid var(--muted);
+      padding-bottom: 2px;
+      transition: color .2s;
+    }
+    .btn-secondary:hover { color: var(--ink); }
+
+    .hero-partners {
+      margin-top: 4rem;
+      opacity: 0; animation: fadeUp .7s .7s forwards;
+    }
+    .hero-partners p {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .partner-logos { display: flex; align-items: center; gap: 2rem; }
+    .partner-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.06em;
+      font-size: 1.1rem;
+    }
+    .badge-fedex { color: var(--fedex-purple); border-color: var(--fedex-purple); }
+    .badge-post  { color: #333; border-color: #ccc; background: var(--post-yellow); }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .badge-fedex .badge-dot { background: var(--fedex-purple); }
+    .badge-post  .badge-dot { background: #c00; }
+
+    .hero-right {
+      position: relative; overflow: hidden;
+      background: var(--ink);
+    }
+    .hero-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 30px,
+        rgba(255,255,255,0.015) 30px, rgba(255,255,255,0.015) 31px
+      );
+    }
+    .hero-big-text {
+      position: absolute; bottom: -0.15em; left: -0.05em;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18vw;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+      letter-spacing: -0.02em;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .hero-stat-grid {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: rgba(255,255,255,0.07);
+      padding: 1px;
+    }
+    .hero-stat {
+      background: rgba(13,13,13,0.92);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .hero-stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--paper);
+      line-height: 1;
+    }
+    .hero-stat-num em { color: var(--accent); font-style: normal; }
+    .hero-stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* ---- TICKER ---- */
+    .ticker {
+      background: var(--accent); color: #fff;
+      padding: 0.75rem 0; overflow: hidden;
+    }
+    .ticker-inner {
+      display: flex; gap: 4rem;
+      animation: ticker 22s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; flex-shrink: 0;
+    }
+    .ticker-sep { color: rgba(255,255,255,0.45); }
+
+    /* ---- SECTION BASE ---- */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      letter-spacing: 0.03em;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    /* ---- SERVICES ---- */
+    #leistungen { background: #fff; }
+    .services-grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .service-card {
+      background: #fff; padding: 3rem 2.5rem;
+      position: relative; overflow: hidden;
+      transition: background .25s;
+    }
+    .service-card:hover { background: var(--ink); }
+    .service-card:hover .service-title,
+    .service-card:hover .service-desc,
+    .service-card:hover .service-num { color: var(--paper); }
+    .service-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem; color: var(--line);
+      line-height: 1; margin-bottom: 1.5rem;
+      transition: color .25s;
+    }
+    .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .service-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem; letter-spacing: 0.04em;
+      color: var(--ink); margin-bottom: 0.8rem;
+      transition: color .25s;
+    }
+    .service-desc {
+      font-size: 0.92rem; line-height: 1.65;
+      color: var(--mid); transition: color .25s;
+    }
+
+    /* ---- ABOUT ---- */
+    #ueber-uns {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+      background: var(--paper);
+    }
+    .about-visual {
+      position: relative; aspect-ratio: 1/1.1;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .about-visual::after {
+      content: '';
+      position: absolute; top: 1.5rem; left: 1.5rem; right: -1.5rem; bottom: -1.5rem;
+      border: 1px solid var(--accent);
+      z-index: -1;
+    }
+    .about-v-text {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 10rem; color: rgba(255,255,255,0.04);
+      letter-spacing: -0.04em;
+      user-select: none;
+    }
+    .about-v-inner {
+      position: absolute; inset: 0;
+      padding: 3rem; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .about-v-label {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .about-v-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem; color: var(--paper);
+    }
+    .about-text p {
+      font-size: 1rem; line-height: 1.75; color: var(--mid);
+      margin-top: 2rem;
+    }
+    .about-line {
+      width: 3rem; height: 2px;
+      background: var(--accent); margin-top: 3rem;
+    }
+    .about-facts {
+      margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+    }
+    .fact-item { border-left: 2px solid var(--accent); padding-left: 1rem; }
+    .fact-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem; color: var(--ink);
+    }
+    .fact-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ---- PARTNER SECTION ---- */
+    #partner {
+      background: var(--ink); color: var(--paper);
+      text-align: center;
+    }
+    #partner .section-h2 { color: var(--paper); }
+    .partner-cards {
+      margin-top: 4rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      max-width: 860px; margin-left: auto; margin-right: auto;
+    }
+    .partner-card {
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 3rem 2.5rem; border-radius: 2px;
+      transition: border-color .2s, transform .2s;
+    }
+    .partner-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-4px); }
+    .partner-logo-big {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem; letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+    }
+    .pc-fedex { color: var(--fedex-purple); filter: brightness(1.5); }
+    .pc-post   { color: var(--post-yellow); }
+    .partner-card p {
+      font-size: 0.9rem; line-height: 1.7; color: rgba(245,240,232,0.6);
+    }
+
+    /* ---- CONTACT ---- */
+    #kontakt {
+      background: var(--paper);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+    }
+    .contact-form { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+    }
+    .form-input, .form-textarea {
+      background: none; border: none;
+      border-bottom: 1px solid var(--line);
+      padding: 0.7rem 0;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+      color: var(--ink);
+      transition: border-color .2s;
+      outline: none; resize: none;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+    .form-textarea { min-height: 100px; }
+    .form-submit {
+      margin-top: 1rem; align-self: flex-start;
+      background: var(--ink); color: var(--paper);
+      border: none; padding: 1rem 2.5rem; cursor: pointer;
+      font-family: 'DM Mono', monospace; font-size: 0.78rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      border-radius: 2px;
+      transition: background .2s, transform .15s;
+    }
+    .form-submit:hover { background: var(--accent); transform: translateY(-2px); }
+    .contact-info { padding-top: 2.5rem; }
+    .contact-info p { font-size: 0.92rem; line-height: 1.7; color: var(--mid); }
+    .contact-detail {
+      margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .contact-row {
+      display: flex; gap: 1rem; align-items: flex-start;
+      font-size: 0.9rem; color: var(--mid);
+    }
+    .contact-row strong {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink); min-width: 5rem;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: var(--ink); color: var(--paper);
+      padding: 3rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.1em;
+    }
+    .footer-logo span { color: var(--accent); }
+    footer p {
+      font-family: 'DM Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 0.12em; color: rgba(255,255,255,0.3);
+    }
+    footer nav ul { gap: 2rem; }
+    footer nav ul a { color: rgba(255,255,255,0.4); }
+    footer nav ul a:hover { color: var(--paper); }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 50vw; }
+      .hero-left { padding: 3rem 1.5rem; }
+      section { padding: 4rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      #ueber-uns, #kontakt { grid-template-columns: 1fr; gap: 3rem; }
+      .partner-cards { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      footer nav ul { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Schmidt<span>.</span>Logistics</a>
+    <ul>
+      <li><a href="#leistungen">Leistungen</a></li>
+      <li><a href="#ueber-uns">Über uns</a></li>
+      <li><a href="#partner">Partner</a></li>
+      <li><a href="#kontakt" class="nav-cta">Angebot anfragen</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">// Zuverlässige Logistik seit 1998</p>
+      <h1 class="hero-h1">
+        Wir<br>
+        liefern.<br>
+        <em>Pünktlich.</em>
+      </h1>
+      <p class="hero-sub">
+        Ihre Waren. Unser Versprechen. Schmidt Logistics ist Ihr Partner für professionelle Speditionsdienstleistungen in ganz Deutschland und Europa.
+      </p>
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn-primary">Angebot anfordern</a>
+        <a href="#leistungen" class="btn-secondary">Unsere Leistungen →</a>
+      </div>
+      <div class="hero-partners">
+        <p>// Offizielle Partnerunternehmen</p>
+        <div class="partner-logos">
+          <div class="partner-badge badge-fedex">
+            <span class="badge-dot"></span> FedEx
+          </div>
+          <div class="partner-badge badge-post">
+            <span class="badge-dot"></span> Deutsche Post
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-big-text">LOG</div>
+      <div class="hero-stat-grid">
+        <div class="hero-stat">
+          <div class="hero-stat-num">25<em>+</em></div>
+          <div class="hero-stat-label">Jahre Erfahrung</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">98<em>%</em></div>
+          <div class="hero-stat-label">Pünktlichkeit</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">12<em>k</em></div>
+          <div class="hero-stat-label">Sendungen/Monat</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">EU<em>+</em></div>
+          <div class="hero-stat-label">Liefergebiete</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>Expressversand</span><span class="ticker-sep">—</span>
+      <span>Palettenversand</span><span class="ticker-sep">—</span>
+      <span>Kühllogistik</span><span class="ticker-sep">—</span>
+      <span>Zollabwicklung</span><span class="ticker-sep">—</span>
+      <span>24h-Lieferung</span><span class="ticker-sep">—</span>
+      <span>EU-Versand</span><span class="ticker-sep">—</span>
+      <span>Tracking in Echtzeit</span><span class="ticker-sep">—</span>
+      <span>Expressversand</span><span class="ticker-sep">—</span>
+      <span>Palettenversand</span><span class="ticker-sep">—</span>
+      <span>Kühllogistik</span><span class="ticker-sep">—</span>
+      <span>Zollabwicklung</span><span class="ticker-sep">—</span>
+      <span>24h-Lieferung</span><span class="ticker-sep">—</span>
+      <span>EU-Versand</span><span class="ticker-sep">—</span>
+      <span>Tracking in Echtzeit</span><span class="ticker-sep">—</span>
+    </div>
+  </div>
+
+  <!-- LEISTUNGEN -->
+  <section id="leistungen">
+    <p class="section-label">// 01 — Leistungen</p>
+    <h2 class="section-h2">Was wir für<br>Sie tun</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon">📦</div>
+        <div class="service-title">Paket &amp; Expressversand</div>
+        <p class="service-desc">Schnelle und sichere Zustellung von Paketen innerhalb Deutschlands und Europa – mit Laufzeiten ab 24 Stunden. Powered by FedEx und Deutsche Post.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon">🚛</div>
+        <div class="service-title">Spedition &amp; Fracht</div>
+        <p class="service-desc">Teil- und Komplettladungen, Paletten, Sperrgut – wir organisieren den Transport Ihrer Waren auf dem Land- und Seeweg professionell und kostengünstig.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon">❄️</div>
+        <div class="service-title">Kühl- &amp; Sonderlogistik</div>
+        <p class="service-desc">Temperaturgeführte Transporte und Sonderlogistik für empfindliche Waren. Unsere Fahrzeuge sind GPS-überwacht und zertifiziert nach DIN EN ISO 22000.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-icon">🌍</div>
+        <div class="service-title">Import &amp; Export</div>
+        <p class="service-desc">Zollabwicklung, Dokumente und internationale Beförderung – wir begleiten Ihre Sendung von der Abholung bis zur Zustellung im Zielland.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-icon">🏭</div>
+        <div class="service-title">Lagerung &amp; Fulfillment</div>
+        <p class="service-desc">Flexible Lagerflächen, Kommissionierung und Versandabwicklung für Ihren Onlineshop oder Ihr Unternehmen. Skalierbar nach Ihrem Bedarf.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-icon">📡</div>
+        <div class="service-title">Echtzeit-Tracking</div>
+        <p class="service-desc">Transparenz auf jedem Meter. Mit unserem Track &amp; Trace-System wissen Sie jederzeit, wo sich Ihre Sendung befindet – rund um die Uhr.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÜBER UNS -->
+  <section id="ueber-uns">
+    <div class="about-visual">
+      <div class="about-v-text">1998</div>
+      <div class="about-v-inner">
+        <div class="about-v-label">// Gegründet</div>
+        <div class="about-v-name">Schmidt Logistics GmbH</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">// 02 — Über uns</p>
+      <h2 class="section-h2">Familienunternehmen.<br>Professioneller<br>Service.</h2>
+      <p>Seit über 25 Jahren bewegen wir Güter zuverlässig und effizient durch Deutschland und Europa. Als Familienunternehmen in zweiter Generation verbinden wir persönliche Betreuung mit modernster Logistiktechnologie.</p>
+      <p>Unsere Partnerschaften mit FedEx und Deutsche Post ermöglichen es uns, Ihnen ein lückenloses Netzwerk und schnellste Lieferzeiten anzubieten – ob Kleinpaket oder komplette LKW-Ladung.</p>
+      <div class="about-line"></div>
+      <div class="about-facts">
+        <div class="fact-item">
+          <div class="fact-num">25+</div>
+          <div class="fact-label">Jahre Erfahrung</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-num">120</div>
+          <div class="fact-label">Mitarbeiter</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-num">48</div>
+          <div class="fact-label">Fahrzeuge</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-num">18</div>
+          <div class="fact-label">EU-Länder</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNER -->
+  <section id="partner">
+    <p class="section-label" style="color:var(--accent)">// 03 — Partner</p>
+    <h2 class="section-h2">Stark durch<br>Partnerschaft</h2>
+    <div class="partner-cards" style="margin-top: 4rem;">
+      <div class="partner-card">
+        <div class="partner-logo-big pc-fedex">FedEx</div>
+        <p>Als autorisierter FedEx-Versandpartner bieten wir Ihnen das globale Express-Netzwerk von FedEx – mit verbindlichen Laufzeiten und zuverlässigem Tracking in über 220 Länder.</p>
+      </div>
+      <div class="partner-card">
+        <div class="partner-logo-big pc-post">Deutsche Post</div>
+        <p>Durch unsere Partnerschaft mit der Deutschen Post gewährleisten wir flächendeckende Paketlieferungen in ganz Deutschland – mit der bewährten Infrastruktur des größten deutschen Logistikkonzerns.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt">
+    <div>
+      <p class="section-label">// 04 — Kontakt</p>
+      <h2 class="section-h2">Angebot<br>anfordern</h2>
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label">Ihr Name</label>
+          <input class="form-input" type="text" placeholder="Max Mustermann" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-Mail</label>
+          <input class="form-input" type="email" placeholder="max@beispiel.de" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Unternehmen</label>
+          <input class="form-input" type="text" placeholder="Musterfirma GmbH" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ihre Anfrage</label>
+          <textarea class="form-textarea" placeholder="Beschreiben Sie Ihren Transportbedarf…"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Nachricht senden →</button>
+      </form>
+    </div>
+    <div class="contact-info">
+      <p class="section-label">// Kontaktdaten</p>
+      <h3 class="section-h2" style="font-size: 2rem;">Wir sind<br>für Sie da.</h3>
+      <p style="margin-top:1.5rem;">Montag bis Freitag von 7:00 bis 18:00 Uhr stehen Ihnen unsere Mitarbeiter persönlich zur Verfügung. Für dringende Anfragen erreichen Sie uns auch am Wochenende.</p>
+      <div class="contact-detail">
+        <div class="contact-row">
+          <strong>Adresse</strong>
+          <span>Industriestraße 42<br>60314 Frankfurt am Main</span>
+        </div>
+        <div class="contact-row">
+          <strong>Telefon</strong>
+          <span>+49 69 12345678</span>
+        </div>
+        <div class="contact-row">
+          <strong>E-Mail</strong>
+          <span>info@schmidt-logistics.de</span>
+        </div>
+        <div class="contact-row">
+          <strong>Öffnungszeiten</strong>
+          <span>Mo–Fr: 07:00–18:00 Uhr<br>Sa: 08:00–13:00 Uhr</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Schmidt<span>.</span>Logistics</div>
+    <p>© 2025 Schmidt Logistics GmbH · Impressum · Datenschutz</p>
+    <nav>
+      <ul>
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#partner">Partner</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+</body>
+</html>

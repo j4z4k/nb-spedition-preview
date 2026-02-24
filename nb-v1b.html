@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NB Spedition GmbH – Mannheim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --paper:  #f3f0e8;
+      --white:  #ffffff;
+      --ink:    #131313;
+      --mid:    #4a4a4a;
+      --muted:  #9a9a9a;
+      --border: #dedad0;
+      --accent: #d13d0a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+    }
+
+    /* ── TOP BAR (thin) ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 44px; background: var(--ink);
+      display: flex; align-items: center;
+      padding: 0 2.5rem; justify-content: space-between;
+    }
+    .topbar-left {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      display: flex; gap: 1.5rem;
+    }
+    .topbar-left span { color: rgba(255,255,255,0.2); }
+    .topbar-right {
+      display: flex; gap: 1.5rem;
+    }
+    .topbar-right a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      text-decoration: none; transition: color .2s;
+    }
+    .topbar-right a:hover { color: rgba(255,255,255,0.8); }
+    .tb-cta {
+      color: var(--accent) !important;
+    }
+
+    /* ── MAIN NAV ── */
+    nav {
+      position: fixed; top: 44px; left: 0; right: 0; z-index: 100;
+      height: 64px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 2.5rem; justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem; letter-spacing: 0.05em;
+      color: var(--ink); text-decoration: none;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .logo-accent {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+    }
+    nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; }
+    nav ul a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mid);
+      text-decoration: none; transition: color .2s;
+    }
+    nav ul a:hover { color: var(--ink); }
+
+    /* ── HERO – links riesiger Text, rechts Infopanel ── */
+    .hero {
+      padding-top: 108px; /* topbar + nav */
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+    }
+    .hero-main {
+      padding: 4rem 2.5rem 4rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+      border-right: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.66rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent);
+      opacity: 0; animation: up .5s .05s both;
+    }
+    .hero-h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(6rem, 13vw, 12rem);
+      line-height: 0.88; letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-top: 1.5rem;
+      opacity: 0; animation: up .7s .15s both;
+    }
+    .hero-h1 em { font-style: normal; color: var(--accent); }
+    .hero-bottom {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      opacity: 0; animation: up .6s .3s both;
+    }
+    .hero-sub {
+      max-width: 38ch; font-size: 0.95rem;
+      color: var(--mid); line-height: 1.75;
+    }
+    .hero-actions { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end; }
+    .btn-block {
+      background: var(--ink); color: var(--paper);
+      padding: 0.8rem 1.8rem; border-radius: 2px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; white-space: nowrap;
+      transition: background .2s;
+    }
+    .btn-block:hover { background: var(--accent); }
+    .btn-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color .2s;
+    }
+    .btn-link:hover { color: var(--ink); }
+
+    /* Hero panel rechts */
+    .hero-panel {
+      background: var(--ink); display: flex; flex-direction: column;
+      opacity: 0; animation: fadeIn .8s .2s both;
+    }
+    .hp-section {
+      padding: 2rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .hp-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+      margin-bottom: 1.25rem;
+    }
+    .hp-stat {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem; color: var(--paper); line-height: 1;
+    }
+    .hp-stat em { color: var(--accent); font-style: normal; }
+    .hp-sub {
+      font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 0.4rem;
+    }
+    .partner-stack { display: flex; flex-direction: column; gap: 0.6rem; }
+    .ps-item {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 2px; padding: 0.7rem 1rem;
+    }
+    .ps-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.05rem; letter-spacing: 0.04em; color: var(--paper);
+    }
+    .ps-status {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .ps-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #22c55e;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--accent); overflow: hidden;
+      padding: 0.6rem 0;
+    }
+    .ticker-track {
+      display: flex; gap: 3rem;
+      animation: ticker 20s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-track span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.85);
+      flex-shrink: 0;
+    }
+    .ticker-track em { color: rgba(255,255,255,0.35); font-style: normal; }
+
+    /* ── SECTIONS ── */
+    section.main { padding: 5rem 2.5rem; }
+    section.alt { background: var(--white); padding: 5rem 2.5rem; }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 0.9rem; display: block;
+    }
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 4vw, 3.6rem);
+      letter-spacing: 0.02em; line-height: 1; color: var(--ink);
+    }
+
+    /* ── LEISTUNGEN: 3-col cards leicht ── */
+    .sv-grid {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .sv-card {
+      background: var(--paper); padding: 2.5rem 2rem;
+      position: relative;
+      transition: background .2s;
+    }
+    .sv-card:hover { background: var(--white); }
+    .sv-card-n {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem; color: var(--border); line-height: 1;
+      margin-bottom: 1.2rem; transition: color .2s;
+    }
+    .sv-card:hover .sv-card-n { color: rgba(209,61,10,0.15); }
+    .sv-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem; letter-spacing: 0.04em; color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+    .sv-card p { font-size: 0.85rem; color: var(--mid); line-height: 1.65; }
+
+    /* ── ÜBER UNS: 3-col ── */
+    .about-cols {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem; align-items: start;
+    }
+    .about-main p {
+      font-size: 0.95rem; color: var(--mid); line-height: 1.8;
+      margin-top: 1.2rem;
+    }
+    .about-fact { border-top: 2px solid var(--accent); padding-top: 1rem; }
+    .af-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem; color: var(--ink); line-height: 1;
+    }
+    .af-num em { color: var(--accent); font-style: normal; }
+    .af-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-top: 0.3rem;
+    }
+
+    /* ── KONTAKT: 3 cols ── */
+    .kontakt-cols {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem;
+    }
+    .kc-form { display: flex; flex-direction: column; gap: 1rem; grid-column: span 2; }
+    .kc-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .kc-field { display: flex; flex-direction: column; gap: 0.3rem; }
+    .kc-field label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .kc-field input, .kc-field textarea {
+      background: none; border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 0; font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; color: var(--ink); outline: none; resize: none;
+      transition: border-color .2s;
+    }
+    .kc-field input:focus, .kc-field textarea:focus { border-color: var(--accent); }
+    .kc-field textarea { min-height: 80px; }
+    .kc-btn {
+      align-self: flex-start;
+      background: var(--ink); color: var(--paper); border: none;
+      padding: 0.8rem 2rem; border-radius: 2px; cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: background .2s;
+    }
+    .kc-btn:hover { background: var(--accent); }
+
+    .kc-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .kci-block {}
+    .kci-block .tag { margin-bottom: 0.3rem; }
+    .kci-block p { font-size: 0.85rem; color: var(--mid); line-height: 1.6; }
+    .hours { margin-top: 0.5rem; }
+    .hrow {
+      display: flex; justify-content: space-between;
+      padding: 0.45rem 0; border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+    .hrow:last-child { border-bottom: none; }
+    .hrow span:first-child { color: var(--mid); }
+    .hrow span:last-child { font-weight: 500; }
+    .hrow.closed span:last-child { color: var(--muted); font-weight: 300; }
+    .hrow.today span:first-child { color: var(--accent); font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 2px solid var(--accent);
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .footer-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    footer p { font-size: 0.7rem; color: rgba(255,255,255,0.25); }
+    footer nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    footer nav ul a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); text-decoration: none;
+    }
+    footer nav ul a:hover { color: rgba(255,255,255,0.7); }
+
+    @keyframes up {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    @media (max-width: 960px) {
+      .topbar { display: none; }
+      nav { top: 0; }
+      nav ul { display: none; }
+      .hero { padding-top: 64px; grid-template-columns: 1fr; }
+      .hero-panel { display: none; }
+      .hero-main { padding: 2.5rem 1.5rem; }
+      section.main, section.alt { padding: 4rem 1.5rem; }
+      .sv-grid { grid-template-columns: 1fr; }
+      .about-cols { grid-template-columns: 1fr; gap: 2rem; }
+      .kontakt-cols { grid-template-columns: 1fr; }
+      .kc-form { grid-column: span 1; }
+      .kc-form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1.2rem; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span>NB Spedition GmbH</span>
+      <span>·</span>
+      <span>Boehringerstraße 16, 68307 Mannheim</span>
+      <span>·</span>
+      <span>0621 79940188</span>
+    </div>
+    <div class="topbar-right">
+      <a href="#leistungen">Leistungen</a>
+      <a href="#kontakt" class="tb-cta">Jetzt anfragen →</a>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">
+      <span class="logo-accent"></span>
+      NB Spedition GmbH
+    </a>
+    <ul>
+      <li><a href="#leistungen">Leistungen</a></li>
+      <li><a href="#ueber-uns">Über uns</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-main">
+      <div>
+        <span class="hero-eyebrow">// Ihr Logistikpartner · Mannheim</span>
+        <h1 class="hero-h1">Sicher.<br>Pünktlich.<br><em>Verlässlich.</em></h1>
+      </div>
+      <div class="hero-bottom">
+        <p class="hero-sub">NB Spedition GmbH steht für zuverlässige Transporte in Deutschland und Europa – als autorisierter Partner von FedEx und Deutscher Post.</p>
+        <div class="hero-actions">
+          <a href="#kontakt" class="btn-block">Angebot anfragen</a>
+          <a href="#leistungen" class="btn-link">Leistungen ansehen</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hp-section">
+        <div class="hp-label">// Pünktlichkeit</div>
+        <div class="hp-stat">98<em>%</em></div>
+        <div class="hp-sub">aller Sendungen pünktlich</div>
+      </div>
+      <div class="hp-section">
+        <div class="hp-label">// Liefergebiete</div>
+        <div class="hp-stat">EU<em>+</em></div>
+        <div class="hp-sub">Deutschland & Europa</div>
+      </div>
+      <div class="hp-section">
+        <div class="hp-label">// Versandpartner</div>
+        <div class="partner-stack">
+          <div class="ps-item">
+            <span class="ps-name">FedEx</span>
+            <span class="ps-dot"></span>
+          </div>
+          <div class="ps-item">
+            <span class="ps-name">Deutsche Post</span>
+            <span class="ps-dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>Expressversand</span><em>—</em>
+      <span>Palettenversand</span><em>—</em>
+      <span>Kühllogistik</span><em>—</em>
+      <span>Zollabwicklung</span><em>—</em>
+      <span>24h-Lieferung</span><em>—</em>
+      <span>EU-Versand</span><em>—</em>
+      <span>Echtzeit-Tracking</span><em>—</em>
+      <span>Expressversand</span><em>—</em>
+      <span>Palettenversand</span><em>—</em>
+      <span>Kühllogistik</span><em>—</em>
+      <span>Zollabwicklung</span><em>—</em>
+      <span>24h-Lieferung</span><em>—</em>
+      <span>EU-Versand</span><em>—</em>
+      <span>Echtzeit-Tracking</span><em>—</em>
+    </div>
+  </div>
+
+  <!-- LEISTUNGEN -->
+  <section class="main" id="leistungen">
+    <span class="tag">// Leistungen</span>
+    <h2>Was wir für Sie leisten</h2>
+    <div class="sv-grid">
+      <div class="sv-card">
+        <div class="sv-card-n">01</div>
+        <h3>Paket- &amp; Expressversand</h3>
+        <p>Schnelle Zustellung ab 24 Stunden in Deutschland und Europa über das FedEx- und Deutsche Post-Netzwerk.</p>
+      </div>
+      <div class="sv-card">
+        <div class="sv-card-n">02</div>
+        <h3>Fracht &amp; Spedition</h3>
+        <p>Teil- und Komplettladungen, Paletten und Sperrgut – professionell geplant und zuverlässig durchgeführt.</p>
+      </div>
+      <div class="sv-card">
+        <div class="sv-card-n">03</div>
+        <h3>Kühl- &amp; Sonderlogistik</h3>
+        <p>Temperaturgeführte Transporte für empfindliche Waren – GPS-überwacht und nach höchsten Standards.</p>
+      </div>
+      <div class="sv-card">
+        <div class="sv-card-n">04</div>
+        <h3>Import &amp; Export</h3>
+        <p>Zollabwicklung, Dokumentenmanagement und internationale Transporte – alles aus einer Hand.</p>
+      </div>
+      <div class="sv-card">
+        <div class="sv-card-n">05</div>
+        <h3>Lagerung &amp; Fulfillment</h3>
+        <p>Flexible Lagerkapazitäten und Kommissionierung – skalierbar nach Ihrem Bedarf.</p>
+      </div>
+      <div class="sv-card">
+        <div class="sv-card-n">06</div>
+        <h3>Echtzeit-Tracking</h3>
+        <p>Vollständige Sendungsverfolgung rund um die Uhr. Sie wissen immer, wo Ihre Ware sich befindet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÜBER UNS -->
+  <section class="alt" id="ueber-uns">
+    <span class="tag">// Über uns</span>
+    <h2>Lokal. Professionell. Verlässlich.</h2>
+    <div class="about-cols">
+      <div class="about-main">
+        <p>Die NB Spedition GmbH ist Ihr verlässlicher Logistikpartner mit Sitz in Mannheim. Mit langjähriger Erfahrung und einem professionellen Team sorgen wir dafür, dass Ihre Sendungen termingerecht und sicher ans Ziel kommen.</p>
+        <p>Als autorisierter Partner von FedEx und Deutscher Post verfügen wir über ein lückenloses europaweites Transportnetzwerk. Persönliche Betreuung und transparente Kommunikation stehen dabei immer an erster Stelle.</p>
+      </div>
+      <div class="about-fact">
+        <div class="af-num">98<em>%</em></div>
+        <div class="af-label">Pünktlichkeitsquote</div>
+      </div>
+      <div class="about-fact">
+        <div class="af-num">EU<em>+</em></div>
+        <div class="af-label">Liefergebiete</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section class="main" id="kontakt">
+    <span class="tag">// Kontakt</span>
+    <h2>Sprechen Sie uns an</h2>
+    <div class="kontakt-cols">
+      <form class="kc-form" onsubmit="return false;">
+        <div class="kc-form-row">
+          <div class="kc-field"><label>Vorname</label><input type="text" placeholder="Max" /></div>
+          <div class="kc-field"><label>Nachname</label><input type="text" placeholder="Mustermann" /></div>
+        </div>
+        <div class="kc-field"><label>E-Mail</label><input type="email" placeholder="max@firma.de" /></div>
+        <div class="kc-field"><label>Telefon (optional)</label><input type="tel" placeholder="+49 621 …" /></div>
+        <div class="kc-field"><label>Ihre Nachricht</label><textarea placeholder="Beschreiben Sie Ihren Transportbedarf…"></textarea></div>
+        <button type="submit" class="kc-btn">Nachricht senden →</button>
+      </form>
+      <div class="kc-info">
+        <div class="kci-block">
+          <span class="tag">// Adresse</span>
+          <p>Boehringerstraße 16<br>68307 Mannheim</p>
+        </div>
+        <div class="kci-block">
+          <span class="tag">// Telefon</span>
+          <p>0621 79940188</p>
+        </div>
+        <div class="kci-block">
+          <span class="tag">// Öffnungszeiten</span>
+          <div class="hours">
+            <div class="hrow today"><span>Montag</span><span>09:00–17:00</span></div>
+            <div class="hrow"><span>Dienstag</span><span>09:00–17:00</span></div>
+            <div class="hrow"><span>Mittwoch</span><span>09:00–17:00</span></div>
+            <div class="hrow"><span>Donnerstag</span><span>09:00–17:00</span></div>
+            <div class="hrow"><span>Freitag</span><span>09:00–17:00</span></div>
+            <div class="hrow"><span>Samstag</span><span>09:00–17:00</span></div>
+            <div class="hrow closed"><span>Sonntag</span><span>Geschlossen</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo"><span class="footer-dot"></span> NB Spedition GmbH</div>
+    <p>© 2025 NB Spedition GmbH · 68307 Mannheim · Impressum · Datenschutz</p>
+    <nav>
+      <ul>
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#ueber-uns">Über uns</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+</body>
+</html>
